@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="PRG_IO" Id="{d57f8744-767b-4363-8f04-d1a4b65b1017}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM PRG_IO
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[			(* INPUTS *)
+	IN_bSawON		    		:= IO.ID1.Ch1 ;
+	IN_bTeach		     		:= IO.ID1.Ch2 ;
+	IN_bSprayer	  				:= IO.ID1.Ch3 ;
+	IN_bRemote		 			:= IO.ID1.Ch4 ;
+	IN_bCableReel	 			:= IO.ID1.Ch5 ;
+	IN_bHoseReel	  			:= IO.ID1.Ch6 ;
+	IN_bWaterLine	 			:= IO.ID1.Ch7 ;
+	IN_bFieldLight				:= IO.ID1.Ch8 ;
+	                    	  
+	IN_bTeachLeft			    := IO.ID2.Ch1 ;
+	IN_bTeachRight			    := IO.ID2.Ch2 ;
+	IN_bSawReturnLimit		   	:= IO.ID2.Ch3 ;
+//	IN_b					    := IO.ID2.Ch4 ;
+	IN_bSawUpLimit			    := IO.ID2.Ch5 ;
+	IN_bSawDownLimit		   	:= IO.ID2.Ch6 ;
+	IN_bDoublePassReference		:= IO.ID2.Ch7 ;
+//	IN_b					    := IO.ID2.Ch8 ;
+	                    	  
+	IN_bSawUP		    		:= IO.ID3.Ch1 ;
+	IN_bSawDOWN		  			:= IO.ID3.Ch2 ;
+	IN_bSawCUT		  		 	:= IO.ID3.Ch3 ;
+	IN_bSawRETURN	 			:= IO.ID3.Ch4 ;
+	IN_bCarriageLH				:= IO.ID3.Ch5 ;
+	IN_bCarriageRH				:= IO.ID3.Ch6 ;
+	IN_bXDriveFwd	 			:= IO.ID3.Ch7 ;
+	IN_bXDriveRev		 		:= IO.ID3.Ch8 ;
+	                          
+	IN_bCrossCutLeft	        := IO.ID4.Ch1 ;
+	IN_bCrossCutRight	        := IO.ID4.Ch2 ;
+	IN_bLiftingPosition			:= IO.ID4.Ch3 ;	
+	IN_bHorn					:= IO.ID4.Ch4 ;	
+	IN_bTrtCrgReady		 		:= IO.ID4.Ch5 ; 
+	IN_bDriveReady		  		:= IO.ID4.Ch6 ;	
+	IN_bCrossCutReady			:= IO.ID4.Ch7 ;	
+	IN_bSawMOLReady		 		:= IO.ID4.Ch8 ;	
+	
+	IN_bCableReelMOLReady		:= IO.ID5.Ch1 ;
+	IN_bHoseReelMOLReady	    := IO.ID5.Ch2 ;
+	IN_b48VDCReady			    := IO.ID5.Ch3 ;
+	IN_bCrgMOLReady			    := IO.ID5.Ch4 ;
+	IN_bTrtMOLReady			    := IO.ID5.Ch5 ;
+	IN_bZaxisSlow				:= IO.ID5.Ch6 ;
+	IN_bZaxisFast				:= IO.ID5.Ch7 ;
+	IN_bTurretRotationReference	:= IO.ID5.Ch8 ;
+	
+	IN_bRemoteUP            	:= IO.ID6.Ch1 ;
+	IN_bRemoteDOWN			    := IO.ID6.Ch2 ;
+	IN_bRemoteCUT    		    := IO.ID6.Ch3 ;
+	IN_bRemoteRETURN		    := IO.ID6.Ch4 ;
+	IN_bRemoteCrgLH   		    := IO.ID6.Ch5 ;
+	IN_bRemoteCrgRH			    := IO.ID6.Ch6 ;
+	IN_bRemoteTrtCCW 		    := IO.ID6.Ch7 ;
+	IN_bRemoteTrtCW			    := IO.ID6.Ch8 ;	
+	                        
+	IN_bRemoteDrvFwd		   	:= IO.ID7.Ch1 ;
+	IN_bRemoteDrvRev		   	:= IO.ID7.Ch2 ;
+	IN_bRemoteSawON				:= IO.ID7.Ch3 ;
+	IN_bRemoteStop		    	:= IO.ID7.Ch4 ;	
+	IN_bTurretCW				:= IO.ID7.Ch5 ;
+	IN_bTurretCCW				:= IO.ID7.Ch6 ;
+	IN_bTurretReturn		   	:= IO.ID7.Ch7 ;
+	IN_bAutoCrossCutDouble	 	:= IO.ID7.Ch8 ;
+
+	
+	IN_bTurretReference  	  	:= IO.ID8.Ch1 ;
+	IN_bTurretCWLimit    	   	:= IO.ID8.Ch2 ;
+	IN_bTurretCCWLimit	     	:= IO.ID8.Ch3 ;
+//	IN_b					    := IO.ID8.Ch4 ;
+	IN_bCarriageLHLimit		  	:= IO.ID8.Ch5 ;
+	IN_bCarriageRHLimit		  	:= IO.ID8.Ch6 ;
+	IN_bCarriageReference	 	:= IO.ID8.Ch7 ;
+	IN_bTurretRotationReference	:= IO.ID8.Ch8 ;
+	
+			(* OUTPUTS *)
+	IO.OD1.Ch1					:=	OUT_bCrgContactor		;
+	IO.OD1.Ch2					:=	OUT_bTrtContactor		;
+	IO.OD1.Ch4					:=	OUT_bTrtCrgLH		   	;
+	IO.OD1.Ch3					:=	OUT_bTrtCrgRH		   	;
+	IO.OD1.Ch5					:=	OUT_bTurretSpeed	    ;
+	IO.OD1.Ch6					:=	OUT_bCarriageSpeed	  	;
+	IO.OD1.Ch7					:=	OUT_bSawCUT			  	;
+	IO.OD1.Ch8					:=	OUT_bSawRETURN		  	;
+	            			
+	IO.OD2.Ch1					:=	OUT_bXDriveFwd		   	;
+	IO.OD2.Ch2					:=	OUT_bXDriveRev		   	;
+	IO.OD2.Ch3					:=	OUT_bSawON		    	;
+	IO.OD2.Ch4					:=	OUT_bCableReel		   	;
+	IO.OD2.Ch5					:=	OUT_bHoseReel		   	;
+	IO.OD2.Ch6					:=	OUT_bFaultResetLED		;
+	IO.OD2.Ch7					:=	OUT_bSawONLED	    	;
+	IO.OD2.Ch8					:=	OUT_bRipCutSpeed	  	;
+	            			
+	IO.OD3.Ch1					:=	OUT_bTravelSpeedLED		;
+	IO.OD3.Ch2					:=	OUT_bTurretReturnLED	;
+	IO.OD3.Ch3					:=	OUT_bFieldLight			;
+	IO.OD3.Ch4					:=	OUT_bSprayer     		;
+	IO.OD3.Ch5					:=	OUT_bSignalLightReelside;	
+	IO.OD3.Ch6					:=	OUT_bSignalLightPanelside;	
+	IO.OD3.Ch7					:=	OUT_bHorn			    ;	
+	IO.OD3.Ch8					:=	OUT_bWaterLine		    ;
+	
+	IO.OD4.Ch1					:=	OUT_bTeachLED			;
+	IO.OD4.Ch2					:=	OUT_bLiftingPositionLED ;
+	IO.OD4.Ch3					:=	OUT_bCarriageReferenceLED;
+	IO.OD4.Ch4					:=	OUT_bTurretReferenceLED ;
+//	IO.OD4.Ch5					:=	OUT_b                   ;
+//	IO.OD4.Ch6					:=	OUT_b                   ;
+//	IO.OD4.Ch7					:=	OUT_b                   ;
+//	IO.OD4.Ch8					:=	OUT_b                   ;
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="PRG_IO">
+      <LineId Id="6" Count="102" />
+      <LineId Id="120" Count="0" />
+      <LineId Id="110" Count="6" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_IntFilter" Id="{b700a9fa-6cfb-45bd-ab7f-f0d55b8c7cc3}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_IntFilter
+VAR_INPUT
+	ValueIn: INT := 0;
+	Cycles: INT;
+END_VAR
+VAR_OUTPUT
+	ValueOut: INT;
+END_VAR
+VAR
+	CycleCounter: INT := 0;
+	ValueSum: REAL := 0;
+	ValueAverage: INT := 0;
+	LoopReset: INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//CycleCounter := CycleCounter + 1;
+
+IF CycleCounter < Cycles THEN
+	ValueSum := ValueSum + INT_TO_REAL(ValueIn) ;
+	CycleCounter := CycleCounter + 1;
+ELSE
+	ValueAverage := REAL_TO_INT(ValueSum / INT_TO_REAL(Cycles)) ;
+	ValueOut := ValueAverage;
+	ValueSum := 0 ;
+	CycleCounter := 0 ;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="FB_IntFilter">
+      <LineId Id="19" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="44" Count="2" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="47" Count="1" />
+      <LineId Id="43" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

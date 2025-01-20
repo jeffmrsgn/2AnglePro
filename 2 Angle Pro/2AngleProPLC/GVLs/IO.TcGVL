@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <GVL Name="IO" Id="{3a63ed98-ab23-41bd-ac3d-0e24f007b974}">
+    <Declaration><![CDATA[VAR_GLOBAL
+	
+	ID1							AT%I*		: ST_IOcard ;
+	ID2							AT%I*		: ST_IOcard ;
+	ID3							AT%I*		: ST_IOcard ;
+	ID4							AT%I*		: ST_IOcard ;
+	ID5							AT%I*		: ST_IOcard ;
+	ID6							AT%I*		: ST_IOcard ;
+	ID7							AT%I*		: ST_IOcard ;	
+	ID8							AT%I*		: ST_IOcard ;	
+	
+	IN_iSawCurrentValue			AT%IW100	: INT ;
+	IN_iSawCurrentStatus		AT%IW101	: INT ;
+	
+//	IN_iDrvFeedbackValue		AT%IW130	: INT ;
+//	IN_iDrvFeedbackStatus		AT%IW131	: INT ;
+	
+	IN_iCarriagePOSValue		AT%IW136	: INT ;
+	IN_iCarriagePOSStatus		AT%IW137	: INT ;
+	
+//	IN_iCarriageTESTValue		AT%IW140	: INT ;
+//	IN_iCarriageTESTStatus		AT%IW141 	: INT ;
+
+	OD1							AT%Q*		: ST_IOcard ;
+	OD2							AT%Q*		: ST_IOcard ;
+	OD3							AT%Q*		: ST_IOcard ;
+	OD4							AT%Q*		: ST_IOcard ;
+	
+	OUT_iEncoderDisplay			AT%QW105	: INT ;
+	OUT_iCrossCutFeedback		AT%QW106	: INT ;
+//	OUT_iXDriveFeedback			AT%QW107	: INT ;
+
+	
+	IN_uTurretSSI				AT%IW110	: UDINT ;
+	IN_uCrossCutSSI				AT%IW116	: UDINT ;
+
+	
+	
+			(* INPUTS *)
+// ID1			
+	IN_bSawON					: BOOL;
+	IN_bTeach					: BOOL;
+	IN_bSprayer					: BOOL;
+	IN_bRemote					: BOOL;
+	IN_bCableReel				: BOOL;
+	IN_bHoseReel				: BOOL;
+	IN_bWaterLine				: BOOL;
+	IN_bFieldLight				: BOOL;
+	
+// ID2	                    		
+	IN_bTeachLeft				: BOOL;
+	IN_bTeachRight				: BOOL;
+	IN_bSawReturnLimit			: BOOL;
+// IN_b						: BOOL;
+	IN_bSawUpLimit				: BOOL;
+	IN_bSawDownLimit			: BOOL;
+	IN_bDoublePassReference		: BOOL;
+//	IN_b						: BOOL;
+
+// ID3	                    		
+	IN_bSawUP					: BOOL;
+	IN_bSawDOWN					: BOOL;
+	IN_bSawCUT					: BOOL;
+	IN_bSawRETURN				: BOOL;
+	IN_bCarriageLH				: BOOL;
+	IN_bCarriageRH				: BOOL;
+	IN_bXDriveFwd				: BOOL;
+	IN_bXDriveRev				: BOOL;
+
+// ID4	                        	
+	IN_bCrossCutLeft			: BOOL;
+	IN_bCrossCutRight			: BOOL;
+	IN_bLiftingPosition			: BOOL;
+	IN_bHorn					: BOOL;
+	IN_bTrtCrgReady				: BOOL;
+	IN_bDriveReady				: BOOL;
+	IN_bCrossCutReady			: BOOL;
+	IN_bSawMOLReady				: BOOL;
+
+// ID5	                        	
+	IN_bCableReelMOLReady		: BOOL;
+	IN_bHoseReelMOLReady		: BOOL;
+	IN_b48VDCReady				: BOOL;
+	IN_bCrgMOLReady				: BOOL;
+	IN_bTrtMOLReady				: BOOL;
+	IN_bZaxisSlow				: BOOL;
+	IN_bZaxisFast				: BOOL;
+//	IN_b						: BOOL;
+
+// ID6	
+	IN_bRemoteUP            	: BOOL;
+	IN_bRemoteDOWN				: BOOL;
+	IN_bRemoteCUT    			: BOOL;
+	IN_bRemoteRETURN			: BOOL;
+	IN_bRemoteCrgLH   			: BOOL;
+	IN_bRemoteCrgRH				: BOOL;
+	IN_bRemoteTrtCCW 			: BOOL;
+	IN_bRemoteTrtCW				: BOOL;	
+
+// ID7	
+	IN_bRemoteDrvFwd			: BOOL;
+	IN_bRemoteDrvRev			: BOOL;
+	IN_bRemoteSawON				: BOOL;
+	IN_bRemoteStop				: BOOL;
+	IN_bTurretCW				: BOOL;
+	IN_bTurretCCW				: BOOL;
+	IN_bTurretReturn			: BOOL;
+	IN_bAutoCrossCutDouble		: BOOL;
+
+// ID8	
+	IN_bTurretReference  		: BOOL;
+	IN_bTurretCWLimit    		: BOOL;
+	IN_bTurretCCWLimit	    	: BOOL;
+//	IN_b					    : BOOL;
+	IN_bCarriageLHLimit			: BOOL;
+	IN_bCarriageRHLimit			: BOOL;
+	IN_bCarriageReference		: BOOL;
+	IN_bTurretRotationReference	: BOOL;
+	                        	
+			(* OUTPUTS *) 
+// OD1  	
+	OUT_bCrgContactor			: BOOL;
+	OUT_bTrtContactor			: BOOL;
+	OUT_bTrtCrgLH				: BOOL;
+	OUT_bTrtCrgRH				: BOOL;
+	OUT_bTurretSpeed			: BOOL;
+	OUT_bCarriageSpeed			: BOOL;
+	OUT_bSawCUT					: BOOL;
+	OUT_bSawRETURN				: BOOL;
+
+// OD2	                        	
+	OUT_bXDriveFwd				: BOOL;
+	OUT_bXDriveRev				: BOOL;
+	OUT_bSawON					: BOOL;
+	OUT_bCableReel				: BOOL;
+	OUT_bHoseReel				: BOOL;
+	OUT_bFaultResetLED			: BOOL;
+	OUT_bSawONLED				: BOOL;
+	OUT_bRipCutSpeed			: BOOL;
+
+// OD3	                        	
+	OUT_bTravelSpeedLED			: BOOL; 
+	OUT_bTurretReturnLED		: BOOL;
+	OUT_bFieldLight				: BOOL;
+	OUT_bSprayer				: BOOL;
+	OUT_bSignalLightReelside	: BOOL;
+	OUT_bSignalLightPanelside	: BOOL;
+	OUT_bHorn					: BOOL;
+	OUT_bWaterLine				: BOOL; 
+
+// OD4	
+	OUT_bTeachLED				: BOOL;
+	OUT_bLiftingPositionLED		: BOOL;
+	OUT_bCarriageReferenceLED	: BOOL;
+	OUT_bTurretReferenceLED		: BOOL;
+//	OUT_b						: BOOL;
+//	OUT_b						: BOOL;
+//	OUT_b						: BOOL;
+//	OUT_b						: BOOL;
+	
+
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

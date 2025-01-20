@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <GVL Name="GVL" Id="{170b2d92-e5db-4ede-ad2b-6decfdef1656}">
+    <Declaration><![CDATA[VAR_GLOBAL
+	
+	bSafetyOK		: BOOL ;
+	bAutoCrossCut	: BOOL ;
+	bMachineHoming: BOOL;
+	bTurretHome: BOOL;
+	bCarriageHomeRH: BOOL;
+	bCarriageHomeLH: BOOL;
+	bCrossCutHomeLH: BOOL;
+	bCrossCutHomeRH: BOOL;
+	bZAxisHome: BOOL;
+	
+	fbTurretSSI: FB_SSI_Encoder;
+	fbCrossCutSSI: FB_SSI_Encoder;
+	fbSawCurrent: FB_AnalogIn;
+	fbCarriagePOS: FB_AnalogIn;
+	
+	bLimitLeft: BOOL;
+    bLimitRight: BOOL;
+	bCrossCutCentre: BOOL;
+	bCrossCutCentreForRotation: BOOL;
+	bApproachingLimitRight: BOOL;
+	bApproachingLimitLeft: BOOL;
+	uCrossCutMedian: UDINT;
+	
+	bTurretReturn: BOOL;
+	TurretReturn: SR;
+	bTriggerReset: BOOL;
+	bTurretMedianRange: BOOL;
+	bTurretBufferSpeed: BOOL;
+	
+	Ax1	:	AXIS_REF;
+	Ax2	:	AXIS_REF;
+	fbMC_GearIn: MC_GearIn;
+	
+	bSawUP		:	BOOL;
+	bSawDOWN	:	BOOL;
+	
+	bAnyServoError: BOOL;
+	bAutoCrossCutErr: BOOL;
+	
+	uTurretSSIMedian: UDINT;
+	bTurretUnderMedian: BOOL;
+	bTurretOverMedian: BOOL;
+	bTurret045Range: BOOL;
+	
+	RS_TriggerStopLH: RS;
+	RS_TriggerStopRH: RS;
+	
+	fbCarriageValueFilter: FB_IntFilter;
+	rCrossCutSpeedMultiplier: REAL;
+	uRailLimitLeft: UDINT;
+	uRailLimitRight: UDINT;
+	bEchainCrashPosLeft: BOOL;
+	bEchainCrashPosRight: BOOL;
+	
+	bTurretMedian: BOOL;
+	bTurretCW: BOOL;
+	bTurretCCW: BOOL;
+	
+	// Visualization Variables
+	bRemote: BOOL;
+	bAutoCrossCutSingle: BOOL;
+	bAutoCrossCutDouble: BOOL;
+	bZAxisSlow: BOOL;
+	bZAxisMed: BOOL;
+	bZAxisFast: BOOL;
+	bTrtCCW: BOOL;
+	bTrtCW: BOOL;
+	bCrgLH: BOOL;
+	bCrgRH: BOOL;
+	bTeachLeft: BOOL;
+	bTeachRight: BOOL;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

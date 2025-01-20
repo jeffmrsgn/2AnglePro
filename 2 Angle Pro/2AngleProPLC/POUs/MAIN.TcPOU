@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{30f9c837-814d-4e26-8386-fac10fd57fc6}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	FB_Blinker_TrtCrgReferenceLED: FB_Blinker;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[PRG_IO();
+
+PRG_00_General();
+PRG_01_Reel();
+PRG_02_Xdrive();
+PRG_03_Saw();
+PRG_04_SawAxes();
+	PRG_04_SawAxes.ACT_04_1_AutoCrossCut();
+	PRG_04_SawAxes.ACT_04_2_CrossCutSpeed();	// CURRENT FEEDBACK
+PRG_05_Turret_Carriage();
+PRG_06_HomePosition();
+PRG_07_Servo();
+	PRG_07_Servo.ACT_07_1_Power();
+	PRG_07_Servo.ACT_07_2_Reset();
+	PRG_07_Servo.ACT_07_3_Jog();
+	PRG_07_Servo.ACT_07_4_JogSpeed();
+	PRG_07_Servo.ACT_07_5_Stop();
+PRG_08_AnalogSignal();
+	PRG_08_AnalogSignal.ACT_08_1_TurretSSI();
+	PRG_08_AnalogSignal.ACT_08_2_CrossCutSSI();
+	PRG_08_AnalogSignal.ACT_08_3_CarriagePOS();
+PRG_XX_Visualization_Variables();
+
+SafeErrAck := IN_FaultReset ;
+
+	// Outputs unaffected by Safety system
+OUT_bFieldLight		:= IN_bFieldLight	;
+OUT_bSprayer := IN_bSprayer ;
+		FB_Blinker_TrtCrgReferenceLED(IN:= TRUE, blink_time:= T#0.5S, OUT=> );
+
+	IF bTurretMedianRange THEN
+		OUT_bTurretReferenceLED := TRUE ;
+	ELSIF (bCrossCutCentreForRotation AND NOT IN_bCarriageReference) THEN
+		OUT_bTurretReferenceLED := FB_Blinker_TrtCrgReferenceLED.OUT ;
+	ELSE OUT_bTurretReferenceLED := FALSE ;
+	END_IF
+	
+	IF NOT IN_bCarriageReference THEN 
+		OUT_bCarriageReferenceLED := TRUE ;
+	ELSIF fbCrosscutSSI.Out.rScaled <= (((fbCrosscutSSI.MaxOut - fbCrosscutSSI.MinOut)/2)+12) AND fbCrosscutSSI.Out.rScaled >= (((fbCrosscutSSI.MaxOut - fbCrosscutSSI.MinOut)/2)-12) THEN
+		OUT_bCarriageReferenceLED := FB_Blinker_TrtCrgReferenceLED.OUT ;
+	ELSE OUT_bCarriageReferenceLED := FALSE ;
+	END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="6" Count="41" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

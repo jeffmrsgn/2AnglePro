@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="PRG_06_HomePosition" Id="{e66157ee-61e1-4e85-a7d7-00daf40c8d31}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM PRG_06_HomePosition
+VAR
+	iStepHome: INT;
+	SR_MachineHoming: SR;
+	R_TRIG_MachineHoming: R_TRIG;	
+	TON_HomingStep10: TON;
+END_VAR
+
+VAR PERSISTENT
+	
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[	IF		NOT bSafetyOK OR IN_FaultReset OR bAutoCrossCut OR bTurretReturn OR NOT SR_MachineHoming.Q1
+	THEN	iStepHome	:=	0;
+			bMachineHoming := FALSE;
+	END_IF
+	
+			R_TRIG_MachineHoming(	CLK:= IN_bLiftingPosition AND NOT bTurretReturn AND NOT bAutoCrossCut AND NOT OUT_bSawOn,
+									Q=> );	
+			SR_MachineHoming(	SET1:= R_TRIG_MachineHoming.Q AND NOT SR_MachineHoming.Q1,
+								RESET:= (R_TRIG_MachineHoming.Q AND SR_MachineHoming.Q1) OR NOT bSafetyOK OR IN_FaultReset, 
+								Q1=> );
+	
+IF bMachineHoming THEN
+	OUT_bLiftingPositionLED := TRUE ;
+ELSE
+	OUT_bLiftingPositionLED := FALSE ;
+END_IF
+
+CASE iStepHome OF
+	0:	// Init step
+		bTurretHome		:= FALSE; 
+	    bCarriageHomeLH	:= FALSE;
+	    bCarriageHomeRH	:= FALSE;
+	    bCrossCutHomeLH	:= FALSE;
+	    bCrossCutHomeRH	:= FALSE;
+		bZAxisHome := FALSE;
+		TON_HomingStep10.IN := FALSE;
+	
+		IF R_TRIG_MachineHoming.Q AND bSafetyOK AND NOT OUT_bSawOn THEN
+			bMachineHoming := TRUE ;
+			iStepHome := 5 ;
+		ELSE
+			bMachineHoming := FALSE ;
+		END_IF
+		
+	5:	// Raise Z-axis all the way up
+	
+		IF IN_bSawUpLimit AND bSafetyOK AND bMachineHoming THEN
+			bZAxisHome := TRUE ;
+		ELSE
+			bZAxisHome := FALSE ; 
+			iStepHome := 7 ;
+		END_IF
+		
+	7:	// Move crosscut motor to centre
+	 
+		IF IN_uCrossCutSSI < (uRailLimitLeft + uRailLimitRight)/2 AND bSafetyOK AND bMachineHoming THEN
+			bCrossCutHomeLH := TRUE ;
+			bCrossCutHomeRH := FALSE ;
+		ELSIF IN_uCrossCutSSI > (uRailLimitLeft + uRailLimitRight)/2 AND bSafetyOK AND bMachineHoming THEN
+			bCrossCutHomeRH := TRUE ;
+			bCrossCutHomeLH := FALSE ;
+		ELSIF (IN_uCrossCutSSI > ((uRailLimitLeft + uRailLimitRight)/2) - 50) OR (IN_uCrossCutSSI < ((uRailLimitLeft + uRailLimitRight)/2) + 50) AND bSafetyOK AND bMachineHoming THEN
+			bCrossCutHomeLH := FALSE ;
+			bCrossCutHomeRH := FALSE ;
+			iStepHome := 10 ;
+		END_IF
+	
+	10:	// Rotate turret to max -90°
+	
+			TON_HomingStep10(IN:= , PT:= T#1S, Q=> , ET=> );
+		IF NOT bTurretCCW AND bSafetyOK AND bMachineHoming THEN
+			bTurretHome := TRUE ;
+		ELSIF bTurretCCW AND bSafetyOK AND bMachineHoming THEN
+			TON_HomingStep10.IN := TRUE ;
+			bTurretHome := FALSE ;
+			IF TON_HomingStep10.Q THEN
+			    iStepHome := 20 ;
+			END_IF
+			
+		END_IF
+	
+	20: // Offset carriage a little to the right		// 32.3 < CarriageHome < 32.5
+	
+		IF (fbCarriagePOS.Out.rScaled < 32.3) AND bMachineHoming AND bSafetyOK THEN
+			bCarriageHomeRH := TRUE ;
+			bCarriageHomeLH := FALSE ;
+		ELSIF (fbCarriagePOS.Out.rScaled > 32.5) AND bMachineHoming AND bSafetyOK THEN
+			bCarriageHomeLH := TRUE ;
+			bCarriageHomeRH := FALSE ;
+		ELSIF (fbCarriagePOS.Out.rScaled > 32.3) AND (fbCarriagePOS.Out.rScaled < 32.5) THEN
+			bCarriageHomeRH := FALSE ;
+			bCarriageHomeLH := FALSE ;
+			iStepHome := 30 ;
+		END_IF
+	
+	30: //Crosscut offset towards the control panel (CUT direction)		// 55.5 < CrosscutHome < 55.75
+	
+		IF (fbCrosscutSSI.Out.rScaled < 55.5) AND bMachineHoming AND bSafetyOK THEN
+			bCrossCutHomeLH := TRUE ;
+			bCrossCutHomeRH := FALSE ;
+		ELSIF (fbCrosscutSSI.Out.rScaled > 55.75) AND bMachineHoming AND bSafetyOK THEN
+			bCrossCutHomeRH := TRUE ;
+			bCrossCutHomeLH := FALSE ;
+		ELSIF (fbCrosscutSSI.Out.rScaled > 55.5) AND (fbCrosscutSSI.Out.rScaled < 55.75) THEN
+			bCrossCutHomeLH := FALSE ;
+			bCrossCutHomeRH := FALSE ;
+			iStepHome := 0 ;
+		END_IF
+		
+END_CASE ]]></ST>
+    </Implementation>
+    <LineIds Name="PRG_06_HomePosition">
+      <LineId Id="81" Count="1" />
+      <LineId Id="166" Count="0" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="121" Count="0" />
+      <LineId Id="197" Count="0" />
+      <LineId Id="317" Count="0" />
+      <LineId Id="202" Count="2" />
+      <LineId Id="198" Count="0" />
+      <LineId Id="187" Count="0" />
+      <LineId Id="195" Count="0" />
+      <LineId Id="192" Count="0" />
+      <LineId Id="196" Count="0" />
+      <LineId Id="185" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="89" Count="0" />
+      <LineId Id="225" Count="0" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="226" Count="0" />
+      <LineId Id="279" Count="0" />
+      <LineId Id="251" Count="0" />
+      <LineId Id="92" Count="1" />
+      <LineId Id="111" Count="0" />
+      <LineId Id="127" Count="0" />
+      <LineId Id="102" Count="0" />
+      <LineId Id="112" Count="0" />
+      <LineId Id="95" Count="0" />
+      <LineId Id="271" Count="4" />
+      <LineId Id="277" Count="0" />
+      <LineId Id="280" Count="1" />
+      <LineId Id="276" Count="0" />
+      <LineId Id="292" Count="2" />
+      <LineId Id="296" Count="1" />
+      <LineId Id="299" Count="7" />
+      <LineId Id="298" Count="0" />
+      <LineId Id="104" Count="1" />
+      <LineId Id="250" Count="0" />
+      <LineId Id="106" Count="2" />
+      <LineId Id="114" Count="0" />
+      <LineId Id="248" Count="0" />
+      <LineId Id="256" Count="0" />
+      <LineId Id="236" Count="0" />
+      <LineId Id="255" Count="0" />
+      <LineId Id="254" Count="0" />
+      <LineId Id="238" Count="0" />
+      <LineId Id="109" Count="0" />
+      <LineId Id="91" Count="0" />
+      <LineId Id="118" Count="0" />
+      <LineId Id="249" Count="0" />
+      <LineId Id="142" Count="0" />
+      <LineId Id="145" Count="0" />
+      <LineId Id="269" Count="0" />
+      <LineId Id="146" Count="1" />
+      <LineId Id="270" Count="0" />
+      <LineId Id="149" Count="0" />
+      <LineId Id="151" Count="2" />
+      <LineId Id="144" Count="0" />
+      <LineId Id="141" Count="0" />
+      <LineId Id="140" Count="0" />
+      <LineId Id="154" Count="2" />
+      <LineId Id="267" Count="0" />
+      <LineId Id="158" Count="0" />
+      <LineId Id="160" Count="0" />
+      <LineId Id="268" Count="0" />
+      <LineId Id="161" Count="0" />
+      <LineId Id="163" Count="2" />
+      <LineId Id="157" Count="0" />
+      <LineId Id="120" Count="0" />
+      <LineId Id="78" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

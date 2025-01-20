@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <GVL Name="GVL_Retain" Id="{45d3985e-09c0-46a9-9b32-5c155975a5de}">
+    <Declaration><![CDATA[VAR_GLOBAL RETAIN
+
+	uTeachLimitLeft: UDINT;
+	uTeachLimitRight: UDINT;
+	iCarriageMedian: INT;
+	iCarriageLeftLimit: INT;
+	iCarriageRightLimit: INT;
+	iZAxisUpperLimitValue: DINT;
+	iZAxisLowerLimitValue: DINT;
+	uTRTCaptureValueMin: UDINT;
+    uTRTCaptureValueMax: UDINT;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

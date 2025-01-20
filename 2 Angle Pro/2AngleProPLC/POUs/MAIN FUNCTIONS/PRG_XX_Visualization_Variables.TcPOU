@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="PRG_XX_Visualization_Variables" Id="{656fc471-b434-4e21-9c55-dbe503452562}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM PRG_XX_Visualization_Variables
+VAR
+	
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[bRemote := IN_bRemote ;
+bAutoCrossCutSingle := NOT IN_bAutoCrossCutDouble ;
+bAutoCrossCutDouble := IN_bAutoCrossCutDouble ;
+bZAxisSlow := IN_bZaxisSlow ;
+bZAxisMed := NOT IN_bZaxisSlow AND NOT IN_bZaxisFast ;
+bZAxisFast := IN_bZaxisFast ;
+bTrtCCW := OUT_bTrtContactor AND OUT_bTrtCrgLH ;
+bTrtCW := OUT_bTrtContactor AND OUT_bTrtCrgRH ;
+bCrgLH := OUT_bCrgContactor AND OUT_bTrtCrgLH ;
+bCrgRH := OUT_bCrgContactor AND OUT_bTrtCrgRH ;
+bTeachLeft := IN_bTeachLeft ;
+bTeachRight := IN_bTeachRight ;]]></ST>
+    </Implementation>
+    <LineIds Name="PRG_XX_Visualization_Variables">
+      <LineId Id="5" Count="1" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="31" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

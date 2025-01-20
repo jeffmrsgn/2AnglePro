@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MultiSetting Crc="4263373933" Version="1.2">
+  <ProjectData>
+    <Id>1</Id>
+    <TargetSystem>
+      <SubType>ELM891x</SubType>
+      <ObjectId>50462744</ObjectId>
+      <SafeAddress>2</SafeAddress>
+    </TargetSystem>
+    <SafetyAliasDevice>
+      <SdsId>1</SdsId>
+      <ObjectId>0</ObjectId>
+      <SafeAddress>0</SafeAddress>
+      <Watchdog>100</Watchdog>
+      <CustomFSoEConnectionId>72d2b25d-bb49-4d52-a8ed-0c083aff2253</CustomFSoEConnectionId>
+    </SafetyAliasDevice>
+    <Application>
+      <ApplicationId>596bbefe-ae17-4e9a-9c78-2da067464009</ApplicationId>
+      <Fb>
+        <FbId>10910eb7-f973-44d8-b4ea-39f6b43d1891</FbId>
+        <FbParameter>
+          <PortId>d1ef3282-0af8-4a95-8368-48c9c2000c84</PortId>
+          <Value><![CDATA[2000]]></Value>
+        </FbParameter>
+      </Fb>
+    </Application>
+    <Comment><![CDATA[Base Project Configuration]]></Comment>
+  </ProjectData>
+  <ProjectData>
+    <Id>2</Id>
+    <TargetSystem>
+      <SubType>ELM891x</SubType>
+      <ObjectId>50462743</ObjectId>
+      <SafeAddress>34</SafeAddress>
+    </TargetSystem>
+    <SafetyAliasDevice>
+      <SdsId>1</SdsId>
+      <ObjectId>0</ObjectId>
+      <SafeAddress>0</SafeAddress>
+      <Watchdog>100</Watchdog>
+      <CustomFSoEConnectionId>d811bac0-9777-4fa2-b929-a9ed8ebc6328</CustomFSoEConnectionId>
+    </SafetyAliasDevice>
+    <Application>
+      <ApplicationId>596bbefe-ae17-4e9a-9c78-2da067464009</ApplicationId>
+      <Fb>
+        <FbId>10910eb7-f973-44d8-b4ea-39f6b43d1891</FbId>
+        <FbParameter>
+          <PortId>d1ef3282-0af8-4a95-8368-48c9c2000c84</PortId>
+          <Value><![CDATA[2000]]></Value>
+        </FbParameter>
+      </Fb>
+    </Application>
+  </ProjectData>
+</MultiSetting>

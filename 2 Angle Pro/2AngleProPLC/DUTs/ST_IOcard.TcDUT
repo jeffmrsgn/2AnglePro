@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_IOcard" Id="{237ecf87-bf05-4805-86f0-053ddcbc2a51}">
+    <Declaration><![CDATA[TYPE ST_IOcard :
+STRUCT
+	Ch1	:	BOOL;
+	Ch2	:	BOOL;
+	Ch3	:	BOOL;
+	Ch4	:	BOOL;
+	Ch5	:	BOOL;
+	Ch6	:	BOOL;
+	Ch7	:	BOOL;
+	Ch8	:	BOOL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
